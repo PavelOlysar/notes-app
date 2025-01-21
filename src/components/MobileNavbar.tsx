@@ -1,7 +1,7 @@
 'use client'
 
 import {
-  BellIcon,
+  StickyNoteIcon,
   HomeIcon,
   LogOutIcon,
   MenuIcon,
@@ -69,9 +69,9 @@ function MobileNavbar() {
                   className="flex items-center gap-3 justify-start"
                   asChild
                 >
-                  <Link href="/notifications">
-                    <BellIcon className="w-4 h-4" />
-                    Notifications
+                  <Link href="/notes">
+                    <StickyNoteIcon className="w-4 h-4" />
+                    Notes
                   </Link>
                 </Button>
                 <Button
