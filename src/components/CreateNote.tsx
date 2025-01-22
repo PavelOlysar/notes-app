@@ -60,22 +60,24 @@ function CreateNote() {
             disabled={isPosting}
           />
           <Separator />
-          <div className="flex flex-wrap gap-2 min-h-[32px] bg-secondary/20 p-2 rounded-md">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-primary/10 text-primary px-3 py-1 rounded-full flex items-center gap-1 text-sm"
-              >
-                {tag}
-                <button
-                  onClick={() => removeTag(tag)}
-                  className="hover:text-destructive transition-colors"
+          {tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 min-h-[32px] bg-secondary/20 p-2 rounded-md">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="bg-primary/10 text-primary px-3 py-1 rounded-full flex items-center gap-1 text-sm"
                 >
-                  <XIcon className="size-4" />
-                </button>
-              </span>
-            ))}
-          </div>
+                  {tag}
+                  <button
+                    onClick={() => removeTag(tag)}
+                    className="hover:text-destructive transition-colors"
+                  >
+                    <XIcon className="size-4" />
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
           <div className="flex gap-2">
             <Input
               placeholder="Add tags..."
@@ -83,7 +85,6 @@ function CreateNote() {
               onChange={(e) => setCurrentTag(e.target.value)}
               onKeyDown={handleAddTag}
               disabled={isPosting}
-              className="flex-1"
             />
             <Button
               size="sm"

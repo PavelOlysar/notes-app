@@ -13,7 +13,7 @@ export default async function Notes() {
   const notes = await getNotes()
 
   return (
-    <div className="container py-6">
+    <div className="container">
       <h1 className="text-2xl font-bold mb-6">Your Notes</h1>
       <NotesList notes={notes} />
     </div>
