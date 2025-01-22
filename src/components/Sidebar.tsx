@@ -38,10 +38,10 @@ async function Sidebar() {
             <div className="w-full">
               <Separator className="my-4" />
               <div className="flex items-center justify-center">
-                <div>
+                <Link href="/notes">
                   <p className="font-medium">{user._count.notes}</p>
                   <p className="text-xs text-muted-foreground">notes</p>
-                </div>
+                </Link>
               </div>{' '}
             </div>
           </div>
