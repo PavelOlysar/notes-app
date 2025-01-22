@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: 'Notes App',
@@ -39,6 +40,7 @@ export default function RootLayout({
                 </div>
               </main>
             </div>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
