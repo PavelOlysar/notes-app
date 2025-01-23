@@ -9,7 +9,7 @@ export default async function Home() {
       <div className="lg:col-span-6">{user ? <HomeNotes /> : <Welcome />}</div>
 
       <div className="hidden lg:block lg:col-span-4 sticky top-20">
-        {/* <CreateDailyNote /> */} CreateDailyNote, LastOpenedNote
+        CreateDailyNote, LastOpenedNote
       </div>
     </div>
   )
