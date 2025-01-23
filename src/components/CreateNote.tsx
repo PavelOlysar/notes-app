@@ -1,15 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent } from './ui/card'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
+import { useRouter } from 'next/navigation'
+import { Card, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { Loader2Icon, PlusIcon, XIcon } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
+import { toast } from 'react-hot-toast'
 import { createNote } from '@/actions/note.action'
-import { Separator } from './ui/separator'
-import toast from 'react-hot-toast'
 
 function CreateNote() {
+  const router = useRouter()
   const [title, setTitle] = useState('')
   const [tags, setTags] = useState<string[]>([])
   const [currentTag, setCurrentTag] = useState('')
@@ -39,6 +41,15 @@ function CreateNote() {
         setTitle('')
         setTags([])
         toast.success('Note created successfully!')
+        if (result.note) {
+          router.push(`/notes/${result.note.id}`)
+        }
+      } else {
+        toast.error(
+          typeof result.error === 'string'
+            ? result.error
+            : 'Failed to create the note'
+        )
       }
     } catch (error) {
       console.error('Failed to create the note:', error)
@@ -60,24 +71,22 @@ function CreateNote() {
             disabled={isPosting}
           />
           <Separator />
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 min-h-[32px] bg-secondary/20 p-2 rounded-md">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-primary/10 text-primary px-3 py-1 rounded-full flex items-center gap-1 text-sm"
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-primary/10 text-primary px-3 py-1 rounded-full flex items-center gap-1 text-sm"
+              >
+                {tag}
+                <button
+                  onClick={() => removeTag(tag)}
+                  className="hover:text-destructive transition-colors"
                 >
-                  {tag}
-                  <button
-                    onClick={() => removeTag(tag)}
-                    className="hover:text-destructive transition-colors"
-                  >
-                    <XIcon className="size-4" />
-                  </button>
-                </span>
-              ))}
-            </div>
-          )}
+                  <XIcon className="size-3" />
+                </button>
+              </span>
+            ))}
+          </div>
           <div className="flex gap-2">
             <Input
               placeholder="Add tags..."
@@ -85,6 +94,7 @@ function CreateNote() {
               onChange={(e) => setCurrentTag(e.target.value)}
               onKeyDown={handleAddTag}
               disabled={isPosting}
+              className="flex-1"
             />
             <Button
               size="sm"
@@ -101,16 +111,6 @@ function CreateNote() {
             >
               Add Tag
             </Button>
-            {tags.length > 0 && (
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => setTags([])}
-                className="text-muted-foreground"
-              >
-                Clear All
-              </Button>
-            )}
           </div>
         </div>
         <div className="flex items-center justify-between pt-4">
@@ -122,7 +122,7 @@ function CreateNote() {
             {isPosting ? (
               <>
                 <Loader2Icon className="size-4 mr-2 animate-spin" />
-                Posting...
+                Creating...
               </>
             ) : (
               <>

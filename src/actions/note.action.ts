@@ -8,9 +8,23 @@ export async function createNote(title: string, tags: string[]) {
   try {
     const userId = await getDbUserId()
 
+    const existingNote = await prisma.note.findFirst({
+      where: {
+        title: title.trim(),
+        authorId: userId,
+      },
+    })
+
+    if (existingNote) {
+      return {
+        success: false,
+        error: 'A note with this title already exists',
+      }
+    }
+
     const note = await prisma.note.create({
       data: {
-        title,
+        title: title.trim(),
         authorId: userId,
         tags,
         content: '',

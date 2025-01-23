@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import { Toaster } from 'react-hot-toast'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 export const metadata: Metadata = {
   title: 'Notes App',
@@ -20,28 +21,30 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className="font-sans">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="min-h-screen">
-              <Navbar />
+          <TooltipProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="min-h-screen">
+                <Navbar />
 
-              <main className="py-8">
-                <div className="max-w-7xl mx-auto px-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div className="hidden lg:block lg:col-span-3">
-                      <Sidebar />
+                <main className="py-8">
+                  <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                      <div className="hidden lg:block lg:col-span-3">
+                        <Sidebar />
+                      </div>
+                      <div className="lg:col-span-9">{children}</div>
                     </div>
-                    <div className="lg:col-span-9">{children}</div>
                   </div>
-                </div>
-              </main>
-            </div>
-            <Toaster />
-          </ThemeProvider>
+                </main>
+              </div>
+              <Toaster />
+            </ThemeProvider>
+          </TooltipProvider>
         </body>
       </html>
     </ClerkProvider>
