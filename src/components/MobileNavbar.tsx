@@ -8,6 +8,7 @@ import {
   MoonIcon,
   SunIcon,
   UserIcon,
+  CalendarDays,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -72,6 +73,16 @@ function MobileNavbar() {
                   <Link href="/notes">
                     <StickyNoteIcon className="w-4 h-4" />
                     Notes
+                  </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="flex items-center gap-3 justify-start"
+                  asChild
+                >
+                  <Link href="/daily/history">
+                    <CalendarDays className="w-4 h-4" />
+                    Daily Notes
                   </Link>
                 </Button>
                 <Button

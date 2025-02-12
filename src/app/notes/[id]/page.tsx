@@ -25,7 +25,7 @@ export default async function NotePage({ params }: NotePageProps) {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
+    <div className="max-w-5xl mx-auto px-4">
       <div className="mb-4">
         <TitleInput noteId={note.id} initialTitle={note.title} />
       </div>

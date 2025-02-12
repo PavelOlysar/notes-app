@@ -17,7 +17,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Relations
-  notes Note[] // One to Many
+  notes      Note[] // One to Many
+  dailyNotes DailyNote[] // One to Many
 }
 
 model Note {
@@ -31,4 +32,17 @@ model Note {
 
   // Relations
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model DailyNote {
+  id        String   @id @default(cuid())
+  authorId  String
+  date      DateTime @unique
+  content   String   @default("")
+  createdAt DateTime @default(now())
+
+  // Relations
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@unique([authorId, date])
 }

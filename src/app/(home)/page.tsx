@@ -2,7 +2,7 @@ import HomeNotes from '@/components/HomeNotes'
 import Welcome from '@/components/Welcome'
 import { currentUser } from '@clerk/nextjs/server'
 import LastUpdatedNote from '@/components/notes/LastUpdatedNote'
-import CreateDailyNote from '@/components/notes/CreateDailyNote'
+import CreateDailyNote from '@/components/notes/daily/CreateDailyNote'
 
 export default async function Home() {
   const user = await currentUser()
