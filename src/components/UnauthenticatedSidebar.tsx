@@ -4,7 +4,7 @@ import { Button } from './ui/button'
 
 const UnauthenticatedSidebar = () => (
   <div className="sticky top-20">
-    <Card>
+    <Card className="h-60">
       <CardHeader>
         <CardTitle className="text-center text-xl font-semibold">
           Welcome!
