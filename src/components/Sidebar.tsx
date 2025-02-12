@@ -19,7 +19,7 @@ async function Sidebar() {
 
   return (
     <div className="sticky top-20">
-      <Card>
+      <Card className="h-60">
         <CardContent className="pt-6">
           <div className="flex flex-col items-center text-center">
             <Link

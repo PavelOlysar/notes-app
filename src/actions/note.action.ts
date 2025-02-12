@@ -100,3 +100,27 @@ export async function getNote(id: string) {
     return null
   }
 }
+
+export async function getLastUpdatedNote() {
+  try {
+    const userId = await getDbUserId()
+    const note = await prisma.note.findFirst({
+      where: {
+        authorId: userId,
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+      select: {
+        id: true,
+        title: true,
+        tags: true,
+        updatedAt: true,
+      },
+    })
+    return note
+  } catch (error) {
+    console.error('Failed to get last updated note:', error)
+    return null
+  }
+}

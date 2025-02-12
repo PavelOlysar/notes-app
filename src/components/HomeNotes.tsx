@@ -1,4 +1,4 @@
-import CreateNote from './CreateNote'
+import CreateNote from '@/components/notes/CreateNote'
 
 function HomeNotes() {
   return (

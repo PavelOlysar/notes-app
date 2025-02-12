@@ -60,7 +60,7 @@ function CreateNote() {
   }
 
   return (
-    <Card className="mb-6">
+    <Card className="mb-6 h-60">
       <CardContent>
         <div className="space-y-2">
           <Input
