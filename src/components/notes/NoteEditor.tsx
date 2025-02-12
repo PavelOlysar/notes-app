@@ -6,6 +6,7 @@ import { updateNote } from '@/actions/note.action'
 import { Button } from '../ui/button'
 import { EyeIcon, PencilIcon } from 'lucide-react'
 import { toast } from 'react-hot-toast'
+import { useTheme } from 'next-themes'
 
 interface NoteEditorProps {
   noteId: string
@@ -19,6 +20,7 @@ export default function NoteEditor({
   const [content, setContent] = useState(initialContent)
   const [isPreview, setIsPreview] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const { theme } = useTheme()
 
   const handleSave = async () => {
     setIsSaving(true)
@@ -61,17 +63,18 @@ export default function NoteEditor({
         </Button>
       </div>
 
-      <div data-color-mode="dark">
+      <div data-color-mode={theme}>
         {isPreview ? (
-          <div className="prose prose-sm dark:prose-invert max-w-full">
-            <MDEditor.Markdown source={content} />
-          </div>
+          <MDEditor.Markdown
+            source={content}
+            className="min-h-[500px] p-2 borderrounded-sm"
+          />
         ) : (
           <MDEditor
             value={content}
             onChange={(value) => setContent(value || '')}
             preview="edit"
-            hideToolbar={false}
+            hideToolbar={true}
             className="min-h-[500px]"
           />
         )}

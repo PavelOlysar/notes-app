@@ -60,6 +60,48 @@ export async function updateNote(id: string, content: string) {
   }
 }
 
+export async function updateNoteTags(id: string, tags: string[]) {
+  try {
+    const userId = await getDbUserId()
+    const note = await prisma.note.update({
+      where: {
+        id,
+        authorId: userId,
+      },
+      data: {
+        tags,
+        updatedAt: new Date(),
+      },
+    })
+    revalidatePath(`/notes/${id}`)
+    return { success: true, note }
+  } catch (error) {
+    console.error('Failed to update tags:', error)
+    return { success: false, error }
+  }
+}
+
+export async function updateNoteTitle(id: string, title: string) {
+  try {
+    const userId = await getDbUserId()
+    const note = await prisma.note.update({
+      where: {
+        id,
+        authorId: userId,
+      },
+      data: {
+        title: title.trim(),
+        updatedAt: new Date(),
+      },
+    })
+    revalidatePath(`/notes/${id}`)
+    return { success: true, note }
+  } catch (error) {
+    console.error('Failed to update title:', error)
+    return { success: false, error }
+  }
+}
+
 export async function getNotes() {
   try {
     const userId = await getDbUserId()

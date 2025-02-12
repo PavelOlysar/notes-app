@@ -2,6 +2,7 @@ import { currentUser } from '@clerk/nextjs/server'
 import { getNotes } from '@/actions/note.action'
 import { redirect } from 'next/navigation'
 import NotesList from '@/components/notes/NotesList'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default async function Notes() {
   const user = await currentUser()
@@ -13,9 +14,13 @@ export default async function Notes() {
   const notes = await getNotes()
 
   return (
-    <div className="container">
-      <h1 className="text-2xl font-bold mb-6">Your Notes</h1>
-      <NotesList notes={notes} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Your Notes</CardTitle>
+      </CardHeader>
+      <CardContent className="p-6">
+        <NotesList notes={notes} />
+      </CardContent>
+    </Card>
   )
 }

@@ -18,7 +18,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
   }
 
   return (
-    <div className="py-6 space-y-6">
+    <div className="space-y-2">
       <Card>
         <CardHeader>
           <CardTitle>Profile</CardTitle>
@@ -39,7 +39,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
               <p className="text-muted-foreground">{result.user.email}</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex justify-between">
             <div>
               <p className="text-muted-foreground">Notes</p>
               <p className="text-2xl font-bold">{result.user._count.notes}</p>

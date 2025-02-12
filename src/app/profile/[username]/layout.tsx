@@ -3,5 +3,5 @@ export default function ProfileLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <div className="max-w-3xl mx-auto px-4">{children}</div>
+  return <div className="max-w-5xl mx-auto px-4">{children}</div>
 }
