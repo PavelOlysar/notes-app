@@ -18,7 +18,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="py-6 space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Profile</CardTitle>

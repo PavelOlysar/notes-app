@@ -39,6 +39,27 @@ export async function createNote(title: string, tags: string[]) {
   }
 }
 
+export async function updateNote(id: string, content: string) {
+  try {
+    const userId = await getDbUserId()
+    const note = await prisma.note.update({
+      where: {
+        id,
+        authorId: userId,
+      },
+      data: {
+        content,
+        updatedAt: new Date(),
+      },
+    })
+    revalidatePath(`/notes/${id}`)
+    return { success: true, note }
+  } catch (error) {
+    console.error('Failed to update note:', error)
+    return { success: false, error }
+  }
+}
+
 export async function getNotes() {
   try {
     const userId = await getDbUserId()
