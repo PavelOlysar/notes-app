@@ -5,8 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatDate } from '@/lib/utils'
 import Link from 'next/link'
-import { DeleteProfile } from '@/components/profile/DeleteProfile'
-import { SignOutBtn } from '@/components/profile/SignOut'
+import { SettingsTabs } from '@/components/profile/SettingsTabs'
 
 async function ProfilePage({ params }: { params: { username: string } }) {
   try {
@@ -69,10 +68,8 @@ async function ProfilePage({ params }: { params: { username: string } }) {
             </div>
           </CardContent>
         </Card>
-        <div className="flex gap-2">
-          <SignOutBtn />
-          <DeleteProfile username={result.user.username} />
-        </div>
+
+        <SettingsTabs username={result.user.username} />
       </div>
     )
   } catch (error) {
