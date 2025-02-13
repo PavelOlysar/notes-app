@@ -60,6 +60,23 @@ export async function updateNote(id: string, content: string) {
   }
 }
 
+export async function deleteNote(id: string) {
+  try {
+    const userId = await getDbUserId()
+    const note = await prisma.note.delete({
+      where: {
+        id,
+        authorId: userId,
+      },
+    })
+    revalidatePath('/notes')
+    return { success: true, note }
+  } catch (error) {
+    console.error('Failed to delete note:', error)
+    return { success: false, error }
+  }
+}
+
 export async function updateNoteTags(id: string, tags: string[]) {
   try {
     const userId = await getDbUserId()

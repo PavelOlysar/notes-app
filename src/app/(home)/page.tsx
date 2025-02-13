@@ -1,4 +1,4 @@
-import HomeNotes from '@/components/HomeNotes'
+import CreateNote from '@/components/notes/CreateNote'
 import Welcome from '@/components/Welcome'
 import { currentUser } from '@clerk/nextjs/server'
 import LastUpdatedNote from '@/components/notes/LastUpdatedNote'
@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
       <div className="lg:col-span-6">
-        <HomeNotes />
+        <CreateNote />
       </div>
 
       <div className="hidden lg:block lg:col-span-4 sticky top-20 space-y-6">

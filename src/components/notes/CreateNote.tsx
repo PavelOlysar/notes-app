@@ -87,7 +87,7 @@ function CreateNote() {
               </span>
             ))}
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <Input
               placeholder="Add tags..."
               value={currentTag}
