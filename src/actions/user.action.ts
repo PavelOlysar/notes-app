@@ -39,6 +39,7 @@ export async function getUserByClerkId(clerkId: string) {
       _count: {
         select: {
           notes: true,
+          dailyNotes: true,
         },
       },
     },

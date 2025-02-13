@@ -5,27 +5,33 @@ import { currentUser } from '@clerk/nextjs/server'
 import { syncUser } from '@/actions/user.action'
 
 async function Navbar() {
-  const user = await currentUser()
-  if (user) await syncUser()
+  try {
+    const user = await currentUser()
+    if (user) await syncUser()
 
-  return (
-    <nav className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link
-              href="/"
-              className="text-xl font-bold tracking-wider font-mono text-primary"
-            >
-              Notes App
-            </Link>
+    return (
+      <nav className="sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Link
+                href="/"
+                className="text-xl font-bold tracking-wider font-mono text-primary"
+              >
+                Notes App
+              </Link>
+            </div>
+
+            <DesktopNavbar />
+            <MobileNavbar />
           </div>
-
-          <DesktopNavbar />
-          <MobileNavbar />
         </div>
-      </div>
-    </nav>
-  )
+      </nav>
+    )
+  } catch (error) {
+    console.error('Error in Navbar:', error)
+    return null
+  }
 }
+
 export default Navbar

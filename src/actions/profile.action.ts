@@ -13,6 +13,7 @@ interface ProfileUser {
   createdAt: Date
   updatedAt: Date
   _count: {
+    dailyNotes: number
     notes: number
   }
 }
@@ -46,7 +47,7 @@ export async function getProfileByUsername(
         createdAt: true,
         updatedAt: true,
         _count: {
-          select: { notes: true },
+          select: { notes: true, dailyNotes: true },
         },
       },
     })
@@ -62,32 +63,37 @@ export async function getProfileByUsername(
   }
 }
 
-// export async function deleteProfile(username: string) {
-//   try {
-//     const { userId } = await auth()
-//     if (!userId) {
-//       return { success: false, error: 'Unauthorized' }
-//     }
+import { clerkClient } from '@clerk/nextjs/server'
 
-//     const currentUser = await prisma.user.findFirst({
-//       where: { clerkId: userId },
-//     })
+export async function deleteProfile(username: string) {
+  try {
+    const { userId } = await auth()
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' }
+    }
 
-//     if (!currentUser || currentUser.username !== username) {
-//       return { success: false, error: 'Unauthorized' }
-//     }
+    const currentUser = await prisma.user.findFirst({
+      where: { clerkId: userId },
+    })
 
-//     await prisma.user.delete({
-//       where: {
-//         username,
-//         clerkId: userId,
-//       },
-//     })
+    if (!currentUser || currentUser.username !== username) {
+      return { success: false, error: 'Unauthorized' }
+    }
 
-//     revalidatePath('/')
-//     return { success: true }
-//   } catch (error) {
-//     console.error('Failed to delete profile:', error)
-//     return { success: false, error: 'Failed to delete profile' }
-//   }
-// }
+    await prisma.user.delete({
+      where: {
+        username,
+        clerkId: userId,
+      },
+    })
+
+    const client = await clerkClient()
+    await client.users.deleteUser(userId)
+
+    revalidatePath('/')
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to delete profile:', error)
+    return { success: false, error: 'Failed to delete profile' }
+  }
+}
