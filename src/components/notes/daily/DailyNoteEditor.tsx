@@ -1,31 +1,52 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
 import { updateDailyNote } from '@/actions/dailyNote.action'
 import { toast } from 'react-hot-toast'
+import { cn } from '@/lib/utils'
+
+const WORD_GOAL = 750
 
 interface DailyNoteEditorProps {
   noteId: string
   initialContent: string
+  initialWordCount: number
+  date: Date
 }
 
 export default function DailyNoteEditor({
   noteId,
   initialContent,
+  initialWordCount,
+  date,
 }: DailyNoteEditorProps) {
   const [content, setContent] = useState(initialContent)
+  const [wordCount, setWordCount] = useState(initialWordCount)
   const [isSaving, setIsSaving] = useState(false)
 
-  const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0
-  const charCount = content.length
+  // Check if note is from today
+  const isToday = new Date(date).toDateString() === new Date().toDateString()
 
+  // Word counting
+  useEffect(() => {
+    const words = content.trim() ? content.trim().split(/\s+/).length : 0
+    setWordCount(words)
+  }, [content])
+  const progress = Math.min((wordCount / WORD_GOAL) * 100, 100)
+
+  // Saving
   const handleSave = async () => {
+    if (!isToday) return
     setIsSaving(true)
     try {
       const result = await updateDailyNote(noteId, content)
       if (result.success) {
+        if (result.note) {
+          setWordCount(result.note.wordCount)
+        }
         toast.success('Note saved!')
       } else {
         toast.error('Failed to save note')
@@ -39,24 +60,37 @@ export default function DailyNoteEditor({
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <div className="text-sm text-muted-foreground space-x-4">
-          <span>
-            {wordCount} {wordCount === 1 ? 'word' : 'words'}
-          </span>
-          <span>
-            {charCount} {charCount === 1 ? 'character' : 'characters'}
-          </span>
+      <div className="space-y-2">
+        <div className="flex justify-between items-center text-sm">
+          <div className="text-muted-foreground">
+            <span>{wordCount} / 750 words</span>
+          </div>
+          {isToday && (
+            <>
+              <span className="font-medium">{progress.toFixed(1)}%</span>
+            </>
+          )}
         </div>
-        <Button onClick={handleSave} disabled={isSaving} size="sm">
-          {isSaving ? 'Saving...' : 'Save'}
-        </Button>
+        {isToday && <Progress value={progress} className="h-1.5" />}
       </div>
+      {isToday && (
+        <div className="flex justify-end">
+          <Button onClick={handleSave} disabled={isSaving} size="sm">
+            {isSaving ? 'Saving...' : 'Save'}
+          </Button>
+        </div>
+      )}
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="min-h-[500px] p-4 text-base leading-relaxed resize-none bg-background"
+        className={cn(
+          'min-h-[500px] p-4 text-base leading-relaxed resize-none bg-background',
+          !isToday &&
+            'cursor-not-allowed opacity-80 focus:ring-0 focus-visible:ring-0'
+        )}
         placeholder="Write your daily note here..."
+        readOnly={!isToday}
+        tabIndex={isToday ? 0 : -1}
       />
     </div>
   )

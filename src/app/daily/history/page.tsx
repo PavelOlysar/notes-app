@@ -20,10 +20,26 @@ export default async function DailyNotes() {
       <div className="space-y-4">
         {notes.map((note) => (
           <Link key={note.id} href={`/daily/${note.id}`}>
-            <Card className="hover:bg-muted/50 transition-colors">
+            <Card className="hover:bg-muted/50 transition-colors mb-2">
               <CardContent className="py-4">
                 <div className="flex items-center justify-between">
                   <p className="font-medium">{formatDate(note.date)}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      {note.wordCount} words
+                    </span>
+                    <div className="w-[100px] h-1.5 bg-secondary rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-primary transition-all"
+                        style={{
+                          width: `${Math.min(
+                            (note.wordCount / 750) * 100,
+                            100
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>

@@ -39,6 +39,7 @@ model DailyNote {
   authorId  String
   date      DateTime @unique
   content   String   @default("")
+  wordCount Int      @default(0)
   createdAt DateTime @default(now())
 
   // Relations

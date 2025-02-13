@@ -43,6 +43,8 @@ export async function createDailyNote() {
 export async function updateDailyNote(id: string, content: string) {
   try {
     const userId = await getDbUserId()
+    const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0
+
     const note = await prisma.dailyNote.update({
       where: {
         id,
@@ -50,6 +52,7 @@ export async function updateDailyNote(id: string, content: string) {
       },
       data: {
         content,
+        wordCount,
       },
     })
     revalidatePath(`/daily/${id}`)

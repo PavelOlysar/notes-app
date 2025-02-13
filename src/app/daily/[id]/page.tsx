@@ -24,9 +24,14 @@ export default async function DailyNotePage({ params }: DailyNotePageProps) {
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{formatDate(note.date)}</h1>
-      <DailyNoteEditor noteId={note.id} initialContent={note.content} />
+    <div className="max-w-5xl mx-auto px-4 py-6">
+      <h1 className="text-3xl font-bold mb-6">{formatDate(note.date)}</h1>
+      <DailyNoteEditor
+        noteId={note.id}
+        initialContent={note.content}
+        initialWordCount={note.wordCount}
+        date={note.date}
+      />
     </div>
   )
 }
