@@ -11,9 +11,14 @@ import { AppearanceSettings } from './settings/AppearanceSettings'
 interface SettingsTabsProps {
   username: string
   dailyWordsGoal: number
+  theme: string
 }
 
-export function SettingsTabs({ username, dailyWordsGoal }: SettingsTabsProps) {
+export function SettingsTabs({
+  username,
+  dailyWordsGoal,
+  theme,
+}: SettingsTabsProps) {
   return (
     <Tabs defaultValue="app" className="w-full">
       <SettingsList />
@@ -28,7 +33,7 @@ export function SettingsTabs({ username, dailyWordsGoal }: SettingsTabsProps) {
         <DailyNotesSettings currentWordsGoal={dailyWordsGoal} />
       </TabsContent>
       <TabsContent value="appearance">
-        <AppearanceSettings />
+        <AppearanceSettings initialTheme={theme} />
       </TabsContent>
       <TabsContent value="account">
         <AccountSettings username={username} />

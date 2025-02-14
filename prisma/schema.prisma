@@ -16,7 +16,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  dailyWordsGoal Int @default(750)
+  theme          String @default("system")
+  dailyWordsGoal Int    @default(750)
 
   // Relations
   notes      Note[] // One to Many

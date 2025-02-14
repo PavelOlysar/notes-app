@@ -12,6 +12,7 @@ interface ProfileUser {
   createdAt: Date
   updatedAt: Date
   dailyWordsGoal: number
+  theme: string
   _count: {
     dailyNotes: number
     notes: number
@@ -47,6 +48,7 @@ export async function getProfileByUsername(
         createdAt: true,
         updatedAt: true,
         dailyWordsGoal: true,
+        theme: true,
         _count: {
           select: { notes: true, dailyNotes: true },
         },

@@ -72,6 +72,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
         <SettingsTabs
           username={result.user.username}
           dailyWordsGoal={result.user.dailyWordsGoal}
+          theme={result.user.theme}
         />
       </div>
     )

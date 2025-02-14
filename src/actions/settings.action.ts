@@ -19,3 +19,18 @@ export async function updateDailyWordsGoal(goal: number) {
     return { success: false, error }
   }
 }
+
+export async function updateTheme(theme: string) {
+  try {
+    const userId = await getDbUserId()
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { theme },
+      select: { theme: true },
+    })
+    return { success: true, theme: user.theme }
+  } catch (error) {
+    console.error('Failed to update theme:', error)
+    return { success: false, error }
+  }
+}
