@@ -4,15 +4,16 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { AccountSettings } from './settings/AccountSettings'
 import { AppSettings } from './settings/AppSettings'
 import { SettingsList } from './settings/SettingsList'
-// import { NotesSettings } from './settings/NotesSettings'
-// import { DailyNotesSettings } from './settings/DailyNotesSettings'
-// import { AppearanceSettings } from './settings/AppearanceSettings'
+import { NotesSettings } from './settings/NotesSettings'
+import { DailyNotesSettings } from './settings/DailyNotesSettings'
+import { AppearanceSettings } from './settings/AppearanceSettings'
 
 interface SettingsTabsProps {
   username: string
+  dailyWordsGoal: number
 }
 
-export function SettingsTabs({ username }: SettingsTabsProps) {
+export function SettingsTabs({ username, dailyWordsGoal }: SettingsTabsProps) {
   return (
     <Tabs defaultValue="app" className="w-full">
       <SettingsList />
@@ -20,10 +21,14 @@ export function SettingsTabs({ username }: SettingsTabsProps) {
       <TabsContent value="app">
         <AppSettings />
       </TabsContent>
-      <TabsContent value="notes">{/* <NotesSettings /> */}</TabsContent>
-      <TabsContent value="daily">{/* <DailyNotesSettings /> */}</TabsContent>
+      <TabsContent value="notes">
+        <NotesSettings />
+      </TabsContent>
+      <TabsContent value="daily">
+        <DailyNotesSettings currentWordsGoal={dailyWordsGoal} />
+      </TabsContent>
       <TabsContent value="appearance">
-        {/* <AppearanceSettings /> */}
+        <AppearanceSettings />
       </TabsContent>
       <TabsContent value="account">
         <AccountSettings username={username} />

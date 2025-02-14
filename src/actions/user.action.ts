@@ -46,6 +46,21 @@ export async function getUserByClerkId(clerkId: string) {
   })
 }
 
+export async function getCurrentUser() {
+  const clerkUser = await currentUser()
+  if (!clerkUser) return null
+
+  const user = await prisma.user.findUnique({
+    where: { clerkId: clerkUser.id },
+    select: {
+      id: true,
+      dailyWordsGoal: true,
+    },
+  })
+
+  return user
+}
+
 export async function getDbUserId() {
   const { userId: clerkId } = await auth()
   if (!clerkId) throw new Error('Unauthorized')

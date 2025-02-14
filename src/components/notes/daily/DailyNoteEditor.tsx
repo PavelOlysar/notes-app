@@ -8,13 +8,12 @@ import { updateDailyNote } from '@/actions/dailyNote.action'
 import { toast } from 'react-hot-toast'
 import { cn } from '@/lib/utils'
 
-const WORD_GOAL = 750
-
 interface DailyNoteEditorProps {
   noteId: string
   initialContent: string
   initialWordCount: number
   date: Date
+  wordsGoal: number
 }
 
 export default function DailyNoteEditor({
@@ -22,6 +21,7 @@ export default function DailyNoteEditor({
   initialContent,
   initialWordCount,
   date,
+  wordsGoal,
 }: DailyNoteEditorProps) {
   const [content, setContent] = useState(initialContent)
   const [wordCount, setWordCount] = useState(initialWordCount)
@@ -35,7 +35,7 @@ export default function DailyNoteEditor({
     const words = content.trim() ? content.trim().split(/\s+/).length : 0
     setWordCount(words)
   }, [content])
-  const progress = Math.min((wordCount / WORD_GOAL) * 100, 100)
+  const progress = Math.min((wordCount / wordsGoal) * 100, 100)
 
   // Saving
   const handleSave = async () => {
@@ -63,7 +63,9 @@ export default function DailyNoteEditor({
       <div className="space-y-2">
         <div className="flex justify-between items-center text-sm">
           <div className="text-muted-foreground">
-            <span>{wordCount} / 750 words</span>
+            <span>
+              {wordCount} / {wordsGoal} words
+            </span>
           </div>
           {isToday && (
             <>

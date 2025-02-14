@@ -69,7 +69,10 @@ async function ProfilePage({ params }: { params: { username: string } }) {
           </CardContent>
         </Card>
 
-        <SettingsTabs username={result.user.username} />
+        <SettingsTabs
+          username={result.user.username}
+          dailyWordsGoal={result.user.dailyWordsGoal}
+        />
       </div>
     )
   } catch (error) {

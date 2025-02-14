@@ -20,9 +20,7 @@ export function AccountSettings({ username }: AccountSettingsProps) {
     <Card>
       <CardHeader>
         <CardTitle>Account Settings</CardTitle>
-        <CardDescription>
-          Manage your account and security settings.
-        </CardDescription>
+        <CardDescription>Manage your account settings.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>

@@ -3,7 +3,6 @@
 import { auth } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
-import { getDbUserId } from './user.action'
 
 interface ProfileUser {
   id: string
@@ -12,6 +11,7 @@ interface ProfileUser {
   image: string | null
   createdAt: Date
   updatedAt: Date
+  dailyWordsGoal: number
   _count: {
     dailyNotes: number
     notes: number
@@ -46,6 +46,7 @@ export async function getProfileByUsername(
         image: true,
         createdAt: true,
         updatedAt: true,
+        dailyWordsGoal: true,
         _count: {
           select: { notes: true, dailyNotes: true },
         },

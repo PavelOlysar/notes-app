@@ -1,5 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { getDailyNote } from '@/actions/dailyNote.action'
+import { getCurrentUser } from '@/actions/user.action'
 import { redirect } from 'next/navigation'
 import DailyNoteEditor from '@/components/notes/daily/DailyNoteEditor'
 import { formatDate } from '@/lib/utils'
@@ -11,17 +12,15 @@ interface DailyNotePageProps {
 }
 
 export default async function DailyNotePage({ params }: DailyNotePageProps) {
-  const user = await currentUser()
+  const clerkUser = await currentUser()
+  if (!clerkUser) redirect('/')
 
-  if (!user) {
-    redirect('/')
-  }
+  const [note, user] = await Promise.all([
+    getDailyNote(params.id),
+    getCurrentUser(),
+  ])
 
-  const note = await getDailyNote(params.id)
-
-  if (!note) {
-    redirect('/daily')
-  }
+  if (!note || !user) redirect('/daily')
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
@@ -31,6 +30,7 @@ export default async function DailyNotePage({ params }: DailyNotePageProps) {
         initialContent={note.content}
         initialWordCount={note.wordCount}
         date={note.date}
+        wordsGoal={user.dailyWordsGoal}
       />
     </div>
   )
