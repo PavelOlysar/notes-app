@@ -13,6 +13,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       disableTransitionOnChange
       themes={['light', 'dark', 'forest', 'valentine', 'ocean', 'rocky']}
       {...props}
+      forcedTheme={undefined}
     >
       {children}
     </NextThemesProvider>

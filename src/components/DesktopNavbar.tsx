@@ -8,8 +8,12 @@ import {
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { SignInButton, UserButton } from '@clerk/nextjs'
-import ModeToggle from './ModeToggle'
 import { currentUser } from '@clerk/nextjs/server'
+import dynamic from 'next/dynamic'
+
+const ModeToggle = dynamic(() => import('./ModeToggle'), {
+  ssr: false,
+})
 
 async function DesktopNavbar() {
   const user = await currentUser()

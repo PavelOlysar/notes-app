@@ -12,6 +12,15 @@ import {
 import { Button } from '@/components/ui/button'
 import { updateTheme } from '@/actions/settings.action'
 
+type ThemeType =
+  | 'light'
+  | 'dark'
+  | 'system'
+  | 'forest'
+  | 'valentine'
+  | 'ocean'
+  | 'rocky'
+
 const themeIcons = {
   light: <SunIcon className="h-[1.2rem] w-[1.2rem]" />,
   dark: <MoonIcon className="h-[1.2rem] w-[1.2rem]" />,
@@ -22,15 +31,29 @@ const themeIcons = {
   ),
   ocean: <span className="h-[1.2rem] w-[1.2rem] rounded-full bg-[#0ea5e9]" />,
   rocky: <span className="h-[1.2rem] w-[1.2rem] rounded-full bg-[#8B7355]" />,
-}
+} as const
 
 export default function ModeToggle() {
-  const { theme, setTheme } = useTheme()
-  const currentTheme = theme || 'system'
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
+  const currentTheme = (theme as ThemeType) || 'system'
 
-  const handleThemeChange = async (newTheme: string) => {
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const handleThemeChange = async (newTheme: ThemeType) => {
     setTheme(newTheme)
     await updateTheme(newTheme)
+  }
+
+  if (!mounted) {
+    return (
+      <Button variant="outline" size="icon">
+        <span className="h-[1.2rem] w-[1.2rem]" />
+        <span className="sr-only">Loading theme</span>
+      </Button>
+    )
   }
 
   return (
