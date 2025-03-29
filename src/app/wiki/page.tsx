@@ -25,9 +25,7 @@ export default async function Wiki() {
             <CardContent className="pt-6">
               <ol className="list-decimal list-inside space-y-3 text-muted-foreground">
                 <li>Sign in using your google account or email address</li>
-                <li>
-                  Create a new note by clicking the "+" button in the navigation
-                </li>
+                <li>Create a new note or daily note</li>
                 <li>Write your content using the rich text editor</li>
                 <li>Save your notes</li>
                 <li>Access your notes from anywhere, anytime</li>
