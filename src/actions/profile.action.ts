@@ -13,6 +13,7 @@ interface ProfileUser {
   updatedAt: Date
   dailyWordsGoal: number
   theme: string
+  noteFontSize: string
   _count: {
     dailyNotes: number
     notes: number
@@ -49,6 +50,7 @@ export async function getProfileByUsername(
         updatedAt: true,
         dailyWordsGoal: true,
         theme: true,
+        noteFontSize: true,
         _count: {
           select: { notes: true, dailyNotes: true },
         },
@@ -59,7 +61,12 @@ export async function getProfileByUsername(
       return { success: false, error: 'User not found' }
     }
 
-    return { success: true, user }
+    return {
+      success: true,
+      user: {
+        ...user,
+      },
+    }
   } catch (error) {
     console.error('Failed to fetch profile:', error)
     return { success: false, error: 'Failed to fetch profile' }

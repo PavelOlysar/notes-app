@@ -12,12 +12,14 @@ interface SettingsTabsProps {
   username: string
   dailyWordsGoal: number
   theme: string
+  noteFontSize: string
 }
 
 export function SettingsTabs({
   username,
   dailyWordsGoal,
   theme,
+  noteFontSize,
 }: SettingsTabsProps) {
   return (
     <Tabs defaultValue="app" className="w-full">
@@ -26,7 +28,7 @@ export function SettingsTabs({
         <AppSettings />
       </TabsContent>
       <TabsContent value="notes">
-        <NotesSettings />
+        <NotesSettings initialFontSize={noteFontSize} />
       </TabsContent>
       <TabsContent value="daily">
         <DailyNotesSettings currentWordsGoal={dailyWordsGoal} />

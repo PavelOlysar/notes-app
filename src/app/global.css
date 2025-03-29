@@ -166,3 +166,27 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.w-md-editor {
+  font-family: inherit !important;
+}
+
+.w-md-editor-text-input {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-family: inherit !important;
+}
+
+.wmde-markdown {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-family: inherit !important;
+}
+
+.w-md-editor-text-pre>textarea,
+.w-md-editor-text-pre>code,
+.w-md-editor-text {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  font-family: inherit !important;
+}

@@ -34,3 +34,19 @@ export async function updateTheme(theme: string) {
     return { success: false, error }
   }
 }
+
+export async function updateNoteFontSize(fontSize: string) {
+  try {
+    const userId = await getDbUserId()
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { noteFontSize: fontSize },
+      select: { noteFontSize: true },
+    })
+    revalidatePath('/notes')
+    return { success: true, fontSize: user.noteFontSize }
+  } catch (error) {
+    console.error('Failed to update note font size:', error)
+    return { success: false, error }
+  }
+}

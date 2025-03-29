@@ -18,6 +18,7 @@ model User {
 
   theme          String @default("system")
   dailyWordsGoal Int    @default(750)
+  noteFontSize   String @default("base")
 
   // Relations
   notes      Note[] // One to Many

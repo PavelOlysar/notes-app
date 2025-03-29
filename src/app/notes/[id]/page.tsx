@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import NoteEditor from '@/components/notes/NoteEditor'
 import TagInput from '@/components/notes/TagInput'
 import TitleInput from '@/components/notes/TitleInput'
+import prisma from '@/lib/prisma'
 
 interface NotePageProps {
   params: {
@@ -18,7 +19,13 @@ export default async function NotePage({ params }: NotePageProps) {
     redirect('/')
   }
 
-  const note = await getNote(params.id)
+  const [note, dbUser] = await Promise.all([
+    getNote(params.id),
+    prisma.user.findUnique({
+      where: { clerkId: user.id },
+      select: { noteFontSize: true },
+    }),
+  ])
 
   if (!note) {
     redirect('/notes')
@@ -32,7 +39,11 @@ export default async function NotePage({ params }: NotePageProps) {
       <div className="mb-6">
         <TagInput noteId={note.id} initialTags={note.tags} />
       </div>
-      <NoteEditor noteId={note.id} initialContent={note.content} />
+      <NoteEditor
+        noteId={note.id}
+        initialContent={note.content}
+        fontSize={dbUser?.noteFontSize || 'base'}
+      />
     </div>
   )
 }

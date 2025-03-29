@@ -8,19 +8,31 @@ import { EyeIcon, PencilIcon } from 'lucide-react'
 import { toast } from 'react-hot-toast'
 import { useTheme } from 'next-themes'
 
+const fontSizeStyles = {
+  sm: '[&_*]:!text-sm [&_.w-md-editor-text-pre]:!text-sm [&_.w-md-editor-text]:!text-sm [&_.w-md-editor-preview]:!text-sm',
+  base: '[&_*]:!text-base [&_.w-md-editor-text-pre]:!text-base [&_.w-md-editor-text]:!text-base [&_.w-md-editor-preview]:!text-base',
+  lg: '[&_*]:!text-lg [&_.w-md-editor-text-pre]:!text-lg [&_.w-md-editor-text]:!text-lg [&_.w-md-editor-preview]:!text-lg',
+  xl: '[&_*]:!text-xl [&_.w-md-editor-text-pre]:!text-xl [&_.w-md-editor-text]:!text-xl [&_.w-md-editor-preview]:!text-xl',
+}
+
 interface NoteEditorProps {
   noteId: string
   initialContent: string
+  fontSize?: string
 }
 
 export default function NoteEditor({
   noteId,
   initialContent,
+  fontSize = 'base',
 }: NoteEditorProps) {
   const [content, setContent] = useState(initialContent)
   const [isPreview, setIsPreview] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const { theme } = useTheme()
+
+  const fontSizeClass =
+    fontSizeStyles[fontSize as keyof typeof fontSizeStyles] || 'text-base'
 
   const handleSave = async () => {
     setIsSaving(true)
@@ -39,7 +51,7 @@ export default function NoteEditor({
   }
 
   return (
-    <div className="space-y-4">
+    <div className={`prose prose-sm dark:prose-invert max-w-none`}>
       <div className="flex justify-between items-center">
         <div className="flex gap-2">
           <Button
@@ -63,11 +75,14 @@ export default function NoteEditor({
         </Button>
       </div>
 
-      <div data-color-mode={theme}>
+      <div
+        data-color-mode={theme}
+        className={`${fontSizeClass} editor-wrapper`}
+      >
         {isPreview ? (
           <MDEditor.Markdown
             source={content}
-            className="min-h-[500px] p-2 borderrounded-sm"
+            className={`min-h-[500px] p-2 border rounded-sm`}
           />
         ) : (
           <MDEditor
@@ -75,7 +90,7 @@ export default function NoteEditor({
             onChange={(value) => setContent(value || '')}
             preview="edit"
             hideToolbar={true}
-            className="min-h-[500px]"
+            className={`min-h-[500px]`}
           />
         )}
       </div>

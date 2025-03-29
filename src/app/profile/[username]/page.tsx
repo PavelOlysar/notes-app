@@ -73,6 +73,7 @@ async function ProfilePage({ params }: { params: { username: string } }) {
           username={result.user.username}
           dailyWordsGoal={result.user.dailyWordsGoal}
           theme={result.user.theme}
+          noteFontSize={result.user.noteFontSize}
         />
       </div>
     )
