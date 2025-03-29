@@ -1,4 +1,10 @@
 import Sidebar from '@/components/Sidebar'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'My Notes - Notes App',
+  description: 'View and manage all your notes in one place',
+}
 
 export default function NotesLayout({
   children,

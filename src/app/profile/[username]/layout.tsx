@@ -1,3 +1,10 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Profile - Notes App',
+  description: 'View and manage your profile settings',
+}
+
 export default function ProfileLayout({
   children,
 }: {

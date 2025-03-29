@@ -10,9 +10,9 @@ export function NotesSettings() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>App Settings</CardTitle>
+        <CardTitle>Notes Settings</CardTitle>
         <CardDescription>
-          Configure general app settings and preferences.
+          Configure general notes settings and preferences.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

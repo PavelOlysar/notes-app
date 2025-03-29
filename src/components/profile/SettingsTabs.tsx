@@ -22,7 +22,6 @@ export function SettingsTabs({
   return (
     <Tabs defaultValue="app" className="w-full">
       <SettingsList />
-
       <TabsContent value="app">
         <AppSettings />
       </TabsContent>
